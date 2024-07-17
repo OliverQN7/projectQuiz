@@ -72,7 +72,7 @@
                     paramString += (!paramString ? '?' : '&') + item.name + '=' + item.element.value;
                 })
 
-                location.href = "choice.html?" + paramString;
+                location.href = "choice.html" + paramString;
             }
         }
     };
