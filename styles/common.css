@@ -39,10 +39,20 @@ a {
 
     transition: .4s;
     cursor: pointer;
+    text-decoration: none;
+}
+
+a.button {
+    display: inline-block;
 }
 
 .button:hover {
     background: #41208b;
+}
+
+.button:disabled {
+    background-color: #E2DFE7;
+    cursor: not-allowed;
 }
 
 .button-transparent {
