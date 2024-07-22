@@ -56,15 +56,20 @@ a.button {
 }
 
 .button-transparent {
-    background: transparent;
+    background-color: transparent;
     color: #6933DC;
     border: 1px solid #6933DC;
 }
 
-
 .button-transparent:hover {
     background: #6933DC;
     color: #FFFFFF;
+}
+
+.button-transparent:disabled {
+    background-color: transparent;
+    color: #E2DFE7;
+    border: 1px solid #E2DFE7;
 }
 
 .footer {
