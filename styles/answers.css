@@ -1,0 +1,96 @@
+.answers {
+    padding: 20px 0 51px 0;
+}
+
+.answers__preTitle {
+    display: flex;
+    align-items: center;
+    margin-bottom: 60px;
+}
+
+.answers__preTitle-title {
+    font-family: "Museo Sans Cyrl Regular", sans-serif;
+    font-size: 20px;
+    color: #dcdcf3;
+    margin-right: 15px;
+}
+
+.answers__preTitle-arrow {
+    margin-right: 15px;
+}
+
+.answers__preTitle-description {
+    font-family: "Museo Sans Cyrl Regular", sans-serif;
+    font-size: 20px;
+    color: #6933dc;
+}
+
+.answers__answer-title {
+    font-family: "Museo Sans Cyrl Bold", sans-serif;
+    font-size: 54px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.answers__answer-title span {
+    color: #6933dc;
+}
+
+.answers__answer-description {
+    font-family: "Museo Sans Cyrl Regular", sans-serif;
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 60px;
+}
+
+.answers__answer-description span {
+    font-family: "Museo Sans Cyrl Bold", sans-serif;
+    color: #6933dc;
+}
+
+
+.answer-options {
+    margin-bottom: 60px;
+}
+
+.answer-option {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.answer-title {
+    font-family: "Museo Sans Cyrl Bold", sans-serif;
+    font-size: 36px;
+    color: #333;
+    margin-bottom: 40px;
+}
+
+.answer-title span {
+    color: #6933dc;
+}
+
+.answers_backResult {
+    display: flex;
+    justify-content: flex-end;
+    position: relative;
+    right: 0;
+    margin-top: 80px;
+}
+
+.answers_backResult a {
+    font-size: 17px;
+    line-height: 20px;
+    color: #6933dc;
+    text-decoration: none;
+
+    display: flex;
+    align-items: center;
+}
+
+.answers_backResult a:hover {
+    text-decoration: underline;
+}
+
+.answers_backResult a img {
+    margin-left: 10px;
+}

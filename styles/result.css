@@ -4,20 +4,19 @@
     text-align: center;
 }
 
-.result__container {
+.result__main {
     display: flex;
     align-items: center;
     flex-direction: column;
-    position: relative;
 }
 
-.result__image {
+.result__main-image {
     position: absolute;
     top: 225px;
     z-index: -1;
 }
 
-.result__title {
+.result__main-title {
     max-width: 588px;
     margin-bottom: 60px;
 }
@@ -38,4 +37,30 @@
     line-height: 190px;
     font-family: "Museo Sans Cyrl Bold", sans-serif;
     color: #FFFFFF;
+}
+
+.result__correctAnswer {
+    display: flex;
+    justify-content: flex-end;
+    position: relative;
+    right: 0;
+    margin-top: 80px;
+}
+
+.result__correctAnswer a {
+    font-size: 17px;
+    line-height: 20px;
+    color: #6933dc;
+    text-decoration: none;
+
+    display: flex;
+    align-items: center;
+}
+
+.result__correctAnswer a:hover {
+    text-decoration: underline;
+}
+
+.result__correctAnswer a img {
+    margin-left: 10px;
 }

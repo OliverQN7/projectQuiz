@@ -19,8 +19,8 @@ a {
 }
 
 .header {
-    padding: 42px 0 40px;
-    border-bottom: 1px solid #DCDCF3;
+    padding: 42px 0 40px 0;
+    border-bottom: 1px solid #dcdcf3;
 }
 
 .container {
@@ -28,18 +28,44 @@ a {
     margin: 0 auto;
 }
 
+.common-title {
+    font-family: MuseoSansCyrlB, sans-serif;
+    font-size: 48px;
+    line-height: 58px;
+}
+
+.common-title span {
+    color: #6933dc;
+}
+
+.big-title {
+    font-family: MuseoSansCyrlB, sans-serif;
+    font-size: 54px;
+    line-height: 65px;
+}
+
+.big-title span {
+    color: #6933dc;
+}
+
 .button {
     padding: 14px 35px;
-    background: #6933DC;
+    background-color: #6933dc;
     border-radius: 6px;
     font-size: 17px;
-    line-height: 20px;
-    color: #FFFFFF;
+    color: #ffffff;
     border: 0;
-
-    transition: .4s;
+    transition: 0.4s;
     cursor: pointer;
+
     text-decoration: none;
+}
+
+.button:disabled,
+.button:disabled:hover {
+    color: #e2dfe7;
+    background-color: transparent;
+    cursor: not-allowed;
 }
 
 a.button {
@@ -47,29 +73,24 @@ a.button {
 }
 
 .button:hover {
-    background: #41208b;
-}
-
-.button:disabled {
-    background-color: #E2DFE7;
-    cursor: not-allowed;
+    background-color: #32098a;
 }
 
 .button-transparent {
-    background-color: transparent;
-    color: #6933DC;
-    border: 1px solid #6933DC;
-}
-
-.button-transparent:hover {
-    background: #6933DC;
-    color: #FFFFFF;
+    background: transparent;
+    color: #6933dc;
+    border: 1px solid #6933dc;
 }
 
 .button-transparent:disabled {
-    background-color: transparent;
-    color: #E2DFE7;
-    border: 1px solid #E2DFE7;
+    background: transparent;
+    color: #e2dfe7;
+    border: 1px solid #e2dfe7;
+}
+
+.button-transparent:hover {
+    background: #6933dc;
+    color: #ffffff;
 }
 
 .footer {
@@ -77,26 +98,39 @@ a.button {
     padding: 40px 0;
     font-size: 13px;
     line-height: 16px;
-    color: #DCDCF3;
+    color: #dcdcf3;
 }
 
-.common-title {
-    font-family: "Museo Sans Cyrl Bold", sans-serif;
-    font-size: 48px;
-    line-height: 58px;
-    color: #333333;
+input[type="radio"] {
+    appearance: none;
+    -webkit-appearance: none;
+
+    width: 20px;
+    height: 20px;
+
+    margin: 0 13px 0 0;
+    border: 3px solid #6933dc;
+    border-radius: 50%;
+
+    transform: translateY(2px);
+
+    display: grid;
+    place-content: center;
 }
 
-.common-title span {
-    color: #6933DC;
+input[type="radio"]::before {
+    content: "";
+
+    width: 10px;
+    height: 10px;
+
+    border-radius: 50%;
+
+    box-shadow: inset 10px 10px #6933dc;
+    transition: 0.2s ease transform;
+    transform: scale(0);
 }
 
-.big-title {
-    font-family: "Museo Sans Cyrl Bold", sans-serif;
-    font-size: 54px;
-    line-height: 65px;
-}
-
-.big-title span {
-    color: #6933DC;
+input[type="radio"]:checked::before {
+    transform: scale(1);
 }

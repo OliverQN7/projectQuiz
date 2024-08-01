@@ -11,9 +11,7 @@
         userResult: [],
         init() {
             checkUserData();
-
-            const url = new URL(location.href);
-            const testId = url.searchParams.get('id');
+            const testId = localStorage.getItem('id');
 
             if (testId) {
                 const xhr = new XMLHttpRequest();
@@ -195,11 +193,10 @@
             this.showQuestion();
         },
         complete() {
-            const url = new URL(location.href);
-            const id = url.searchParams.get('id');
-            const name = url.searchParams.get('name');
-            const lastName = url.searchParams.get('lastName');
-            const email = url.searchParams.get('email');
+            const id = localStorage.getItem('id');
+            const name = localStorage.getItem('name');
+            const lastName = localStorage.getItem('lastName');
+            const email = localStorage.getItem('email');
 
             const xhr = new XMLHttpRequest();
             xhr.open('POST', 'https://testologia.ru/pass-quiz?id=' + id, false);
@@ -214,11 +211,15 @@
                 let result = null;
                 try {
                     result = JSON.parse(xhr.responseText);
+                    localStorage.setItem('result', xhr.responseText);
+                    localStorage.setItem('score', JSON.parse(xhr.responseText).score);
+                    localStorage.setItem('total', JSON.parse(xhr.responseText).total);
+                    localStorage.setItem('results', JSON.stringify(this.userResult));
                 } catch (e) {
                     location.href = 'index.html';
                 }
                 if (result) {
-                    location.href = 'result.html?score=' + result.score + '&total=' + result.total;
+                    location.href = 'result.html';
                 }
             } else {
                 location.href = 'index.html';
