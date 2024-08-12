@@ -22,14 +22,14 @@ export class Test {
                 try {
                     this.quiz = JSON.parse(xhr.responseText);
                 } catch (e) {
-                    location.href = 'index.html';
+                    location.href = '#/';
                 }
                 this.startQuiz();
             } else {
-                location.href = 'index.html';
+                location.href = '#/';
             }
         } else {
-            location.href = 'index.html';
+            location.href = '#/';
         }
     }
 
@@ -222,13 +222,13 @@ export class Test {
                 localStorage.setItem('total', JSON.parse(xhr.responseText).total);
                 localStorage.setItem('results', JSON.stringify(this.userResult));
             } catch (e) {
-                location.href = 'index.html';
+                location.href = '#/';
             }
             if (result) {
                 location.href = 'result.html';
             }
         } else {
-            location.href = 'index.html';
+            location.href = '#/';
         }
     }
 }

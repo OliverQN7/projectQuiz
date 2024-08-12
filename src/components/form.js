@@ -72,7 +72,7 @@ export class Form {
                 localStorage.setItem(item.name, item.element.value)
             })
 
-            location.href = "choice.html";
+            location.href = "#/choice";
         }
     }
 }

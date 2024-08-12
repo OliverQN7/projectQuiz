@@ -1,4 +1,8 @@
 import {Form} from "./components/form.js";
+import {Choice} from "./components/choice.js";
+import {Test} from "./components/test.js";
+import {Result} from "./components/result.js";
+import {Answer} from "./components/answers.js";
 
 export class Router {
     constructor() {
@@ -19,6 +23,42 @@ export class Router {
                 styles: 'styles/form.css',
                 load: () => {
                     new Form();
+                }
+            },
+            {
+                route: '#/choice',
+                title: 'Выбор теста',
+                template: 'templates/choice.html',
+                styles: 'styles/choice.css',
+                load: () => {
+                    new Choice();
+                }
+            },
+            {
+                route: '#/test',
+                title: 'Прохождение теста',
+                template: 'templates/test.html',
+                styles: 'styles/test.css',
+                load: () => {
+                    new Test();
+                }
+            },
+            {
+                route: '#/result',
+                title: 'Результат теста',
+                template: 'templates/result.html',
+                styles: 'styles/result.css',
+                load: () => {
+                    new Result();
+                }
+            },
+            {
+                route: '#/answers',
+                title: 'Ответы теста',
+                template: 'templates/answers.html',
+                styles: 'styles/answers.css',
+                load: () => {
+                    new Answer();
                 }
             },
         ]
