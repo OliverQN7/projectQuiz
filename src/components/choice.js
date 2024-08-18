@@ -1,7 +1,9 @@
+import {UrlManager} from "../utils/url-manager.js";
+
 export class Choice {
     constructor() {
         this.quizzes = [];
-        checkUserData();
+        UrlManager.checkUserData();
 
         const xhr = new XMLHttpRequest();
         xhr.open("GET", "https://testologia.ru/get-quizzes", false);
@@ -39,7 +41,7 @@ export class Choice {
                 choiceOptionArrowElement.className = 'choice__option-arrow';
 
                 const choiceOptionImageElement = document.createElement('img');
-                choiceOptionImageElement.setAttribute('src', 'images/arrow.png');
+                choiceOptionImageElement.setAttribute('src', '/images/arrow.png');
                 choiceOptionImageElement.setAttribute('alt', 'Стрелка');
 
 

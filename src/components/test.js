@@ -1,3 +1,5 @@
+import {UrlManager} from "../utils/url-manager.js";
+
 export class Test {
     constructor() {
         this.quiz = null;
@@ -10,7 +12,7 @@ export class Test {
         this.progressBarElement = null;
         this.userResult = [];
 
-        checkUserData();
+        UrlManager.checkUserData();
         const testId = localStorage.getItem('id');
 
         if (testId) {
@@ -168,8 +170,6 @@ export class Test {
                 chosenAnswerId: chosenAnswerId,
             })
         }
-        console.log(this.userResult);
-
 
         if (action === 'next' || action === 'pass') {
             this.currentQuestionIndex++;
@@ -225,7 +225,7 @@ export class Test {
                 location.href = '#/';
             }
             if (result) {
-                location.href = 'result.html';
+                location.href = '#/result';
             }
         } else {
             location.href = '#/';

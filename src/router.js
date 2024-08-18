@@ -66,7 +66,7 @@ export class Router {
 
     async openRoute() {
         const newRoute = this.routes.find(item => {
-            return item.route === window.location.hash;
+            return item.route === window.location.hash.split('?')[0];
         })
 
         if (!newRoute) {

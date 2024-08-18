@@ -1,12 +1,17 @@
+import {UrlManager} from "../utils/url-manager.js";
+
 export class Answer {
     constructor() {
         this.quiz = null;
         this.quizRight = null;
+
         this.name = null;
         this.lastName = null;
         this.email = null;
+
         this.questionTitleElement = null;
         this.optionsElement = null;
+
         this.userAnswers = [];
 
         this.getRequest();
@@ -16,7 +21,7 @@ export class Answer {
     }
 
     getRequest() {
-        checkUserData();
+        UrlManager.checkUserData();
 
         const testId = localStorage.getItem('id');
 
@@ -58,7 +63,7 @@ export class Answer {
                 try {
                     this.quizRight = JSON.parse(xhr.responseText);
                 } catch (e) {
-                    location.href = "index.html";
+                    location.href = "#/";
                 }
             }
         }
@@ -154,7 +159,7 @@ export class Answer {
             .getElementById("backToResults")
             .addEventListener("click", function (event) {
                 event.preventDefault();
-                location.href = "result.html";
+                location.href = "#/result";
             });
     }
 }
