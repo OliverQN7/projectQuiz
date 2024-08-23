@@ -3,7 +3,7 @@ import {UrlManager} from "../utils/url-manager.js";
 export class Choice {
     constructor() {
         this.quizzes = [];
-        UrlManager.checkUserData();
+
 
         const xhr = new XMLHttpRequest();
         xhr.open("GET", "https://testologia.ru/get-quizzes", false);
