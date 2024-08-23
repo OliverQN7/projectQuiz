@@ -29,7 +29,7 @@ export class Router {
                 route: '#/login',
                 title: 'Вход в систему',
                 template: 'templates/login.html',
-                styles: 'styles/login.css',
+                styles: 'styles/form.css',
                 load: () => {
                     new Form('login');
                 }
