@@ -101,6 +101,31 @@ a.button {
     color: #dcdcf3;
 }
 
+.header__container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.profile {
+    display: flex;
+    align-items: center;
+}
+
+.profile__image {
+    margin-right: 5px;
+}
+
+.profile__info-user {
+    font-size: 18px;
+    line-height: 18px;
+}
+
+.profile__info-logout {
+    font-size: 12px;
+    line-height: 12px;
+}
+
 input[type="radio"] {
     appearance: none;
     -webkit-appearance: none;
