@@ -1,4 +1,5 @@
 import {CustomHttp} from "../services/custom-http.js";
+import config from "../../config/config.js";
 
 export class Choice {
     constructor() {
@@ -8,7 +9,7 @@ export class Choice {
 
     async init() {
         try {
-            const result = await CustomHttp.request('http://localhost:3000/api/tests', 'GET');
+            const result = await CustomHttp.request(config.host + '/tests', 'GET');
 
             if (result) {
                 if (result.error) {
@@ -16,6 +17,8 @@ export class Choice {
                 }
                 this.quizzes = result;
                 this.processQuizzes();
+            } else {
+                location.href = '#/';
             }
         } catch (error) {
             console.log(error);

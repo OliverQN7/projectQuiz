@@ -1,5 +1,6 @@
 import {CustomHttp} from "../services/custom-http.js";
 import {Auth} from "../services/auth.js";
+import config from "../../config/config.js";
 
 export class Form {
     constructor(page) {
@@ -89,7 +90,7 @@ export class Form {
         if (this.validateForm()) {
             if (this.page === 'signup') {
                 try {
-                    const result = await CustomHttp.request('http://localhost:3000/api/signup', 'POST', {
+                    const result = await CustomHttp.request(config.host + '/signup', 'POST', {
                         name: this.fields.find(item => item.name === 'name').element.value,
                         lastName: this.fields.find(item => item.name === 'lastName').element.value,
                         email: this.fields.find(item => item.name === 'email').element.value,
@@ -108,7 +109,7 @@ export class Form {
                 }
             } else {
                 try {
-                    const result = await CustomHttp.request('http://localhost:3000/api/login', 'POST', {
+                    const result = await CustomHttp.request(config.host + '/login', 'POST', {
                         email: this.fields.find(item => item.name === 'email').element.value,
                         password: this.fields.find(item => item.name === 'password').element.value,
                     });
