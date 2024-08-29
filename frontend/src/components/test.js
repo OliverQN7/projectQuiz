@@ -1,6 +1,7 @@
 import {UrlManager} from "../utils/url-manager.js";
 import {CustomHttp} from "../services/custom-http.js";
 import config from "../../config/config.js";
+import {Auth} from "../services/auth.js";
 
 export class Test {
     constructor() {
@@ -196,37 +197,26 @@ export class Test {
         this.showQuestion();
     }
 
-    complete() {
-        const id = localStorage.getItem('id');
-        const name = localStorage.getItem('name');
-        const lastName = localStorage.getItem('lastName');
-        const email = localStorage.getItem('email');
+    async complete() {
+        const userInfo = Auth.getUserInfo();
+        if (!userInfo) {
+            location.href = "/#"
+        }
 
-        const xhr = new XMLHttpRequest();
-        xhr.open('POST', 'https://testologia.ru/pass-quiz?id=' + id, false);
-        xhr.setRequestHeader('Content-type', 'application/json; charset=UTF-8');
-        xhr.send(JSON.stringify({
-            name: name,
-            lastName: lastName,
-            email: email,
-            results: this.userResult,
-        }));
-        if (xhr.status === 200 && xhr.responseText) {
-            let result = null;
-            try {
-                result = JSON.parse(xhr.responseText);
-                localStorage.setItem('result', xhr.responseText);
-                localStorage.setItem('score', JSON.parse(xhr.responseText).score);
-                localStorage.setItem('total', JSON.parse(xhr.responseText).total);
-                localStorage.setItem('results', JSON.stringify(this.userResult));
-            } catch (e) {
-                location.href = '#/';
-            }
+        try {
+            const result = await CustomHttp.request(config.host + '/tests/' + this.routeParams.id + '/pass', 'POST',
+                {
+                    userId: userInfo.userId,
+                    results: this.userResult,
+                })
             if (result) {
-                location.href = '#/result';
+                if (result.error) {
+                    throw new Error(result.error);
+                }
+                location.href = '#/result?id=' + this.routeParams.id;
             }
-        } else {
-            location.href = '#/';
+        } catch (error) {
+            console.log(error);
         }
     }
 }
