@@ -200,7 +200,7 @@ export class Test {
     async complete() {
         const userInfo = Auth.getUserInfo();
         if (!userInfo) {
-            location.href = "/#"
+            location.href = "/#";
         }
 
         try {
