@@ -31,7 +31,6 @@ export class CustomHttp {
                     return null;
                 }
             }
-            console.log(response.message)
             throw new Error(response.message);
         }
 

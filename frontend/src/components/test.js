@@ -1,4 +1,6 @@
 import {UrlManager} from "../utils/url-manager.js";
+import {CustomHttp} from "../services/custom-http.js";
+import config from "../../config/config.js";
 
 export class Test {
     constructor() {
@@ -11,27 +13,23 @@ export class Test {
         this.passButtonElement = null;
         this.progressBarElement = null;
         this.userResult = [];
+        this.routeParams = UrlManager.getQueryParams();
+        this.init();
+    }
 
-        UrlManager.checkUserData();
-        const testId = localStorage.getItem('id');
+    async init() {
+        try {
+            const result = await CustomHttp.request(config.host + '/tests/' + this.routeParams.id);
 
-        if (testId) {
-            const xhr = new XMLHttpRequest();
-            xhr.open("GET", "https://testologia.ru/get-quiz?id=" + testId, false);
-            xhr.send();
-
-            if (xhr.status === 200 && xhr.responseText) {
-                try {
-                    this.quiz = JSON.parse(xhr.responseText);
-                } catch (e) {
-                    location.href = '#/';
+            if (result) {
+                if (result.error) {
+                    throw new Error(result.error);
                 }
+                this.quiz = result;
                 this.startQuiz();
-            } else {
-                location.href = '#/';
             }
-        } else {
-            location.href = '#/';
+        } catch (error) {
+            console.log(error);
         }
     }
 

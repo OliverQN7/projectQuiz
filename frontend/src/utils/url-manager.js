@@ -1,10 +1,18 @@
 export class UrlManager {
-    static checkUserData() {
-        const name = localStorage.getItem("name");
-        const lastName = localStorage.getItem("lastName");
-        const email = localStorage.getItem("email");
+    static getQueryParams() {
+        const qs = document.location.hash.split("+").join(" ");
+        let params = {},
+            tokens,
+            re = /[?&]([^=]+)=([^&]*)/g;
+        while ((tokens = re.exec(qs))) {
+            params[decodeURIComponent(tokens[1])] = decodeURIComponent(tokens[2]);
+        }
 
-        if (!name || !lastName || !email) {
+        return params;
+    }
+
+    static checkUserData(params) {
+        if (!params.name || !params.lastName || !params.email) {
             location.href = "#/";
         }
     }

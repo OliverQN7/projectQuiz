@@ -59,8 +59,7 @@ export class Choice {
     chooseQuiz(element) {
         const dataId = element.getAttribute('data-id');
         if (dataId) {
-            localStorage.setItem('id', dataId);
-            location.href = '#/test';
+            location.href = '#/test?id=' + dataId;
         }
     }
 }
