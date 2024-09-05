@@ -24,7 +24,7 @@ export class Result {
                     }
                     document.getElementById('result__score').innerText = result.score + '/' + result.total;
                     document.getElementById('answers').addEventListener('click', () => {
-                        location.href = "#/answers";
+                        location.href = "#/answers?id=" + this.routeParams.id;
                     })
                     return;
                 }

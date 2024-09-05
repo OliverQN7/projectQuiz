@@ -1,95 +1,58 @@
 import {UrlManager} from "../utils/url-manager.js";
+import {Auth} from "../services/auth.js";
+import {CustomHttp} from "../services/custom-http.js";
+import config from "../../config/config.js";
 
 export class Answer {
     constructor() {
         this.quiz = null;
-        this.quizRight = null;
-
-        this.name = null;
-        this.lastName = null;
-        this.email = null;
 
         this.questionTitleElement = null;
         this.optionsElement = null;
 
-        this.userAnswers = [];
+        this.routeParams = UrlManager.getQueryParams();
 
-        this.getRequest();
-        this.getRightAnswers();
-        this.checkRightAnswer();
-
+        this.init();
+        this.backToResults();
     }
 
-    getRequest() {
-        UrlManager.checkUserData();
+    async init() {
+        const userInfo = Auth.getUserInfo();
+        const userEmail = Auth.getUserEmail();
 
-        const testId = localStorage.getItem('id');
-
-        this.name = localStorage.getItem('name');
-        this.lastName = localStorage.getItem('lastName');
-        this.email = localStorage.getItem('email');
-        this.userResult = localStorage.getItem('results');
-
-        if (testId) {
-            const xhr = new XMLHttpRequest();
-
-            xhr.open("GET", "https://testologia.ru/get-quiz?id=" + testId, false);
-            xhr.send();
-
-            if (xhr.status === 200 && xhr.responseText) {
-                try {
-                    this.quiz = JSON.parse(xhr.responseText);
-                } catch (e) {
-                    location.href = '#/';
-                }
-            } else {
-                location.href = '#/';
-            }
-        } else {
-            location.href = '#/';
+        if (!userInfo && !userEmail) {
+            location.href = "/#";
         }
-    }
 
-    getRightAnswers() {
-        const testId = localStorage.getItem('id');
+        if (this.routeParams.id) {
+            try {
+                const result = await CustomHttp.request(config.host + '/tests/' + this.routeParams.id + '/result/details?userId=' + userInfo.userId);
+                if (result) {
+                    if (result.error) {
+                        throw new Error(result.error);
+                    }
+                    document.getElementById("title").innerText = result.test.name;
+                    document.getElementById("userData").innerHTML =
+                        "Тест выполнил <span> " +
+                        userInfo.fullName + ', ' +
+                        userEmail
+                    "</span>";
 
-        if (testId) {
-            const xhr = new XMLHttpRequest();
-
-            xhr.open("GET", "https://testologia.ru/get-quiz-right?id=" + testId, false);
-            xhr.send();
-
-            if (xhr.status === 200 && xhr.responseText) {
-                try {
-                    this.quizRight = JSON.parse(xhr.responseText);
-                } catch (e) {
-                    location.href = "#/";
+                    this.quiz = result.test.questions;
+                    // Ищем элемент заголовка и записываем его в переменную, чтобы каждый раз не искать этот элемент
+                    this.questionTitleElement = document.getElementById("answer-title");
+                    // Ищем элементы ответов
+                    this.optionsElement = document.getElementById("options");
+                    this.showQuestions();
                 }
+            } catch (error) {
+                console.log(error);
             }
         }
-    }
-
-    checkRightAnswer(inputElement, chosenAnswerId, rightAnswerId) {
-        document.getElementById("title").innerText = this.quiz.name;
-        document.getElementById("userData").innerHTML =
-            "Тест выполнил <span> " +
-            this.name +
-            " " +
-            this.lastName +
-            ", " +
-            this.email +
-            "</span>";
-
-        // Ищем элемент заголовка и записываем его в переменную, чтобы каждый раз не искать этот элемент
-        this.questionTitleElement = document.getElementById("answer-title");
-        // Ищем элементы ответов
-        this.optionsElement = document.getElementById("options");
-
-        this.showQuestions();
     }
 
     showQuestions() {
-        const allQuestion = this.quiz.questions;
+        const allQuestion = this.quiz;
 
         this.optionsElement.innerHTML = "";
 
@@ -99,22 +62,14 @@ export class Answer {
             titleElement.innerHTML =
                 "<span>Вопрос " + (index + 1) + ": </span>" + item.question;
             this.optionsElement.append(titleElement);
-            const chosenAnswer = JSON.parse(this.userResult).find((result) => {
-                return result.questionId === item.id;
-            });
 
-            this.userAnswers.push(chosenAnswer.chosenAnswerId);
-            this.showAnswers(
-                item.answers,
-                chosenAnswer.chosenAnswerId,
-                this.quizRight[index]
-            );
+            this.showAnswers(item);
         });
     }
 
-    showAnswers(answers, chosenAnswerId, rightAnswerId) {
-        answers.forEach(answer => {
-            const inputId = "answer-" + answer.id;
+    showAnswers(item) {
+        item.answers.forEach(answer => {
+            const inputId = 'answer-' + answer.id;
             const answerOptionElement = document.createElement("div");
             answerOptionElement.className = "answer-option";
 
@@ -126,40 +81,30 @@ export class Answer {
             inputElement.setAttribute("value", answer.id);
             inputElement.setAttribute("disabled", "disabled");
 
-            if (chosenAnswerId === answer.id) {
-                inputElement.checked = true;
-            }
-
             const labelElement = document.createElement("label");
             labelElement.setAttribute("for", inputId);
             labelElement.innerText = answer.answer;
 
-            if (chosenAnswerId === answer.id) {
-                if (rightAnswerId === answer.id) {
-                    inputElement.checked = false;
-                    inputElement.style.border = "6px solid #5FDC33";
-                    labelElement.style.color = "#5FDC33";
-                } else {
-                    inputElement.checked = false;
-                    inputElement.style.border = "6px solid #DC3333";
-                    labelElement.style.color = "#DC3333";
-                }
+            if (answer.correct === true) {
+                inputElement.style.border = "6px solid #5FDC33";
+                labelElement.style.color = "#5FDC33";
+            } else if (answer.correct === false) {
+                inputElement.style.border = "6px solid #DC3333";
+                labelElement.style.color = "#DC3333";
             }
 
             this.optionsElement.appendChild(answerOptionElement);
             answerOptionElement.appendChild(inputElement);
             answerOptionElement.appendChild(labelElement);
-
-            this.backToResults();
-        });
+        })
     }
 
     backToResults() {
         document
             .getElementById("backToResults")
-            .addEventListener("click", function (event) {
+            .addEventListener("click", (event) => {
                 event.preventDefault();
-                location.href = "#/result";
+                location.href = "#/result?id=" + this.routeParams.id;
             });
     }
 }

@@ -56,11 +56,11 @@ export class Test {
 
         const timerElement = document.getElementById('timer');
         let seconds = 59;
-        const interval = setInterval(function () {
+        this.interval = setInterval(function () {
             seconds--;
             timerElement.innerText = seconds;
             if (seconds === 0) {
-                clearInterval(interval);
+                clearInterval(this.interval);
                 this.complete();
             }
         }.bind(this), 1000);
@@ -177,6 +177,7 @@ export class Test {
         }
 
         if (this.currentQuestionIndex > this.quiz.questions.length) {
+            clearInterval(this.interval);
             this.complete();
             return;
         }

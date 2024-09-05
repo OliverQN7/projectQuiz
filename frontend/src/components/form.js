@@ -134,8 +134,10 @@ export class Form {
                         fullName: result.fullName,
                         userId: result.userId,
                     })
+                    localStorage.setItem('email', email);
                     location.href = '#/choice'
                 }
+
             } catch (error) {
                 console.log(error);
             }
